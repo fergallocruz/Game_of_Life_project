@@ -24,7 +24,7 @@ def plotInitialConfig(Lines, grid):
         p = line.split()
         x = int(p[0])
         y = int(p[1])
-        grid[x][y] = 1
+        grid[y][x] = 1
 
 
 def addGlider(i, j, grid):
@@ -43,15 +43,34 @@ def update(frameNum, img, grid, N):
     for i in range(1, N-1, 1):
         for j in range(1, N-1, 1):
             # At each time step in the simulation, for each cell (i, j) in the grid, do the following:
-            neighbors = grid[i-1][j-1] + grid[i][j-1] + grid[i+1][j-1] + grid[i-1][j] + grid[i+1][j] + grid[i-1][j-1] + grid[i][j-1] + grid[i+1][j+1]
+            neighbors = grid[i-1][j-1] + grid[i][j-1] + grid[i+1][j-1] + \
+                        grid[i-1][j] + grid[i+1][j] + \
+                        grid[i-1][j-1] + grid[i][j-1] + grid[i+1][j+1]
             cell = grid[i][j]
             if cell == 1:
                 if (neighbors < 2) or (neighbors > 3):
                     newGrid[i][j] = 0
+                else:
+                    newGrid[i][j] = 1
             else:
                 if neighbors == 3:
                     newGrid[i][j] = 1
-
+                else:
+                    newGrid[i][j] = 0
+    '''
+    print("#"+str(frameNum)+" TICK -> "
+                            "Blocks"
+                            "Beehives"
+                            "Loafs"
+                            "Boats"
+                            "Tubs"
+                            "Blinkers"
+                            "Toads"
+                            "Beacons"
+                            "Gliders"
+                            "Light-weight spaceships"
+                            "Others")
+                            '''
     # update data
     img.set_data(newGrid)
     grid[:] = newGrid[:]
@@ -77,7 +96,7 @@ def heatmap(data, row_labels, col_labels, ax=None, **kwargs):
                    labeltop=False, labelbottom=True)
 
     # Rotate the tick labels and set their alignment.
-    plt.setp(ax.get_xticklabels(), rotation=-70, ha="left",
+    plt.setp(ax.get_xticklabels(), rotation=0, ha="left",
              rotation_mode="anchor")
 
     # Turn spines off and create white grid.
@@ -116,7 +135,7 @@ def main():
     N = int(Lines[0].split()[0])
 
     # set animation update interval
-    updateInterval = 10
+    updateInterval = 1
 
     # declare grid
     # grid = np.array([])
@@ -131,17 +150,19 @@ def main():
     plotInitialConfig(Lines[1:], grid)
 
     fig, ax = plt.subplots()
-
     ax.set_xticks(np.arange(N))
     ax.set_yticks(np.arange(N))
 
     ax.set_title("Conway's Game of Life")
-    im = heatmap(grid, range(0, N), range(N, 0), ax=ax, cmap="Wistia")
+    im = heatmap(grid, range(0, N), range(0, N), ax=ax, cmap="Wistia")
+
 
     # set up animation
-    ani = animation.FuncAnimation(fig, update, fargs=(im, grid, N,), frames=30, interval=updateInterval, save_count=50)
+    ani = animation.FuncAnimation(fig,update,fargs=(im, grid, N,), frames = 50, interval = 10, blit = False)
 
-    plt.show()
+    print("saving")
+    ani.save('sim.mp4', writer = 'ffmpeg', fps = 30)
+    #plt.show()
 
 
 # call main
