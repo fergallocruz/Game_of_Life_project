@@ -190,6 +190,7 @@ if __name__ == "__main__":
             objects.append([x, y, v])
             
         def update_im(i):
+            # TODO have some more 
             # We add new density creators in here
             for i in data['density']:
                 p = i.split()
@@ -253,8 +254,8 @@ if __name__ == "__main__":
         # plot vector field
         arrow_color = data['Color Scheme']['Arrows Color']
         q = plt.quiver(inst.velo[:, :, 1], inst.velo[:, :, 0], scale=10, angles='xy', color=arrow_color)
-        anim = animation.FuncAnimation(fig, update_im, interval=25, save_count=500)
-        anim.save("pathway.mp4", fps=30, extra_args=['-vcodec', 'libx264'])
+        anim = animation.FuncAnimation(fig, update_im, interval=25, save_count=150)
+        anim.save("diff_densities.mp4", fps=30, extra_args=['-vcodec', 'libx264'])
         plt.show()
 
     except ImportError:
