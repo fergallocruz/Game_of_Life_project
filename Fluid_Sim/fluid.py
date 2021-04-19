@@ -165,29 +165,96 @@ if __name__ == "__main__":
     try:
         import matplotlib.pyplot as plt
         from matplotlib import animation
-
+        from matplotlib.colors import ListedColormap, LinearSegmentedColormap
+        from matplotlib.patches import Rectangle
+        import json
+  
+        # Opening JSON file
+        f = open('custom.json',)
+          
+        # returns JSON object as 
+        # a dictionary
+        data = json.load(f)
+        f.close()
+        def get_custom_color_palette_hash(colors):
+            return LinearSegmentedColormap.from_list("", colors)
         inst = Fluid()
-
+        
+        objects = []
+        # We set the static objects in the plot
+        for i in data['objects']:
+            p = i.split()
+            x = int(p[0])
+            y = int(p[1])
+            v = data['objects'][i]
+            objects.append([x, y, v])
+            
         def update_im(i):
             # We add new density creators in here
-            inst.density[14:17, 14:17] += 100  # add density into a 3*3 square
+            for i in data['density']:
+                p = i.split()
+                v = data['density'][i]
+                if i.find(':') > 0 :
+                    p0 = p[0].split(':')
+                    p1 = p[1].split(':')
+                    x0 = int(p0[0])
+                    x1 = int(p0[1])
+                    y0 = int(p1[0])
+                    y1 = int(p1[1])
+                    inst.density[x0:x1, y0:y1] += v
+                else:
+                    x = int(p[0])
+                    y = int(p[1])
+                    inst.density[x, y] += v
+            
             # We add velocity vector values in here
-            inst.velo[20, 20] = [-2, -2]
+            for i in data['velocity']:
+                p = i.split()
+                x = int(p[0])
+                y = int(p[1])
+                v = data['velocity'][i].split()
+                xv = int(v[0])
+                yv = int(v[1])
+                inst.velo[x, y] = [xv, yv]
+            
             inst.step()
+            
+            for o in objects:
+                x, y = o[0], o[1]
+                w, h = o[2][0], o[2][1]
+                inst.density[y:y+h, x:x+w] = 0
+                inst.velo[y:y+h, x:x+w] = [0,0]
+                ax.add_patch(Rectangle((x, y), w, h, color=data['Color Scheme']['Objects Color']))
+            
             im.set_array(inst.density)
+            
             q.set_UVC(inst.velo[:, :, 1], inst.velo[:, :, 0])
             # print(f"Density sum: {inst.density.sum()}")
             im.autoscale()
-
-        fig = plt.figure()
-
+        
+        
+        # Style up the Plot
+        fig, ax = plt.subplots(
+            facecolor=(data['Color Scheme']['Background Color'])
+            )
+        ax.set_title(
+            data['Color Scheme']['Title'], 
+            color=data['Color Scheme']['Title Color']
+            )
+        ax.tick_params(
+            labelcolor=data['Color Scheme']['Axes Color']
+            )
+        colors = data['Color Scheme']['cmap']
+        cmap = get_custom_color_palette_hash(colors)
+        
         # plot density
-        im = plt.imshow(inst.density, vmax=100, interpolation='bilinear')
+        im = plt.imshow(inst.density, vmax=100, interpolation='bilinear', cmap=cmap)
 
         # plot vector field
-        q = plt.quiver(inst.velo[:, :, 1], inst.velo[:, :, 0], scale=10, angles='xy')
-        anim = animation.FuncAnimation(fig, update_im, interval=0)
-        anim.save("movie.mp4", fps=30, extra_args=['-vcodec', 'libx264'])
+        arrow_color = data['Color Scheme']['Arrows Color']
+        q = plt.quiver(inst.velo[:, :, 1], inst.velo[:, :, 0], scale=10, angles='xy', color=arrow_color)
+        anim = animation.FuncAnimation(fig, update_im, interval=25, save_count=500)
+        anim.save("pathway.mp4", fps=30, extra_args=['-vcodec', 'libx264'])
         plt.show()
 
     except ImportError:
