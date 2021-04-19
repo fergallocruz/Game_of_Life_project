@@ -66,7 +66,7 @@ Inside the "Color Scheme" tag there are following tags:
 Under this tag place as many colors you wish in form of a range of color. This means the values in the plot area with have its color depending on the range they fall. The first colors are related to the smallest values as the last colors correspond to those higher.
 
 ##### Axes, Labels, Title and Background Color
-> Place the hex color value :tw-1f3a8: for each of the labels and play with color combinations.
+> Place the hex color value :art: for each of the labels and play with color combinations.
 
 ![alt text](https://github.com/fergallocruz/Simulation_and_Visualization_projects/blob/Game_of_life_p1/Fluid_Sim/Screenshots/Figure%202021-04-18%20133511.png?raw=true)
 ![alt text](https://github.com/fergallocruz/Simulation_and_Visualization_projects/blob/Game_of_life_p1/Fluid_Sim/Screenshots/Figure%202021-04-18%20215715.png?raw=true)
