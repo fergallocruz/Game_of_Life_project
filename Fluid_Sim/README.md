@@ -5,13 +5,13 @@
 
 # Fluid Simulation ~ Project II
 
-##Description
+## Description
 This is a project for the second term of the Simulation and Visualization Course at Universidad Panamericana Campus Guadalajara for the Computer Systems career. The following is the implementation of a customization option in python to make personalized simulations.
 The output after running the project is an mp4 with the result animation.
-##Customization using input file
-You will have a document on the main folder called custom.json (link to file) where you can place the input data to make fluid simulation videos.
-###Create multiple sources for velocity and density
-#####Velocity vectors
+## Customization using input file
+You will have a document on the main folder called [custom.json](https://github.com/fergallocruz/Simulation_and_Visualization_projects/blob/Game_of_life_p1/Fluid_Sim/custom.json "custom.json") where you can place the input data to make fluid simulation videos.
+### Create multiple sources for velocity and density
+##### Velocity vectors
 Under the Velocity tag on the customization file you will place n vectors and its value separated by space as follows:
 ```json
 "velocity": {
@@ -23,7 +23,7 @@ the code above would make the grid change the vector values:
 > velocity[20, 40] = [-2, 2]
 velocity[20, 8] = [179 20]
 
-#####Density vectors
+##### Density vectors
 Under the "density" tag on the customization file you will place n points and the value (positive or negative)  to change the density on such place. Example below:
 ```json
   "density": {
@@ -38,7 +38,7 @@ the code above would make the grid change the density values:
 # decresed density in just one point x = 25 and y = 26
 density[25, 26] -= 10 
 ```
-###Create color schemas for the simulation
+### Create color schemas for the simulation
 Inside the "Color Scheme" tag there are following tags:
 ```json
   "Color Scheme":{
@@ -62,17 +62,17 @@ Inside the "Color Scheme" tag there are following tags:
     "Arrows Color": "#FFFFFF"
   }
 ```
-#####cmap
+##### cmap
 Under this tag place as many colors you wish in form of a range of color. This means the values in the plot area with have its color depending on the range they fall. The first colors are related to the smallest values as the last colors correspond to those higher.
 
-#####Axes, Labels, Title and Background Color
+##### Axes, Labels, Title and Background Color
 Place the hex color value :tw-1f3a8: for each of the labels and play with color combinations.
 ![alt text](https://github.com/fergallocruz/Simulation_and_Visualization_projects/blob/Game_of_life_p1/Fluid_Sim/Screenshots/Figure%202021-04-18%20133511.png?raw=true)
 ![alt text](https://github.com/fergallocruz/Simulation_and_Visualization_projects/blob/Game_of_life_p1/Fluid_Sim/Screenshots/Figure%202021-04-18%20215715.png?raw=true)
 ![alt text](https://github.com/fergallocruz/Simulation_and_Visualization_projects/blob/Game_of_life_p1/Fluid_Sim/Screenshots/Figure%202021-04-18%20215734.png?raw=true)
 
-###Simulate the presence of objects
-In order to place some solids you can do so by placing the starting point of them as the tag inside "objects" and placing an array of [width, height] as it's value.
+### Simulate the presence of objects
+In order to place some solids you can do so by placing the starting point of them as the tag inside "objects" and placing an array of [width, height] as its value.
 ```json
   "objects": {
       "0 50": [20, 5],
