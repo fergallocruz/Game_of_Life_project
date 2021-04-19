@@ -67,7 +67,9 @@ Under this tag place as many colors you wish in form of a range of color. This m
 
 #####Axes, Labels, Title and Background Color
 Place the hex color value :tw-1f3a8: for each of the labels and play with color combinations.
-IMAGEEE
+![alt text](https://github.com/fergallocruz/Simulation_and_Visualization_projects/blob/Game_of_life_p1/Fluid_Sim/Screenshots/Figure%202021-04-18%20133511.png?raw=true)
+![alt text](https://github.com/fergallocruz/Simulation_and_Visualization_projects/blob/Game_of_life_p1/Fluid_Sim/Screenshots/Figure%202021-04-18%20215715.png?raw=true)
+![alt text](https://github.com/fergallocruz/Simulation_and_Visualization_projects/blob/Game_of_life_p1/Fluid_Sim/Screenshots/Figure%202021-04-18%20215734.png?raw=true)
 
 ###Simulate the presence of objects
 In order to place some solids you can do so by placing the starting point of them as the tag inside "objects" and placing an array of [width, height] as it's value.
