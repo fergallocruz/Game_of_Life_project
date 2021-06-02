@@ -105,7 +105,8 @@ AUTH_PASSWORD_VALIDATORS = [
 REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': [
         'url_filter.integrations.drf.DjangoFilterBackend',
-    ]
+    ],
+    'TEST_REQUEST_DEFAULT_FORMAT': 'json',  # Use application/json instead of multipart/form-data requests in tests.
 }
 
 # Internationalization

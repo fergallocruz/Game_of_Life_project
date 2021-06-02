@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  {% load static %}
+  <head>
+    <meta charset="utf-8" />
+    <meta name="description" content="" />
+    <title>Dashboard</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <!-- Load d3.js -->
+    <script src="https://d3js.org/d3.v4.js"></script>
+    <!-- Function for radial charts -->
+    <script src="https://cdn.jsdelivr.net/gh/holtzy/D3-graph-gallery@master/LIB/d3-scale-radial.js"></script>
+  </head>
+  <body>
+    {% block content %}
+    <script>
+      data = {{ data_json }}
+    </script>
+    <nav class="navbar navbar-default">
+      <div class="container">
+        <h2>COVID Dashboard Project</h2>
+        <h5>Team: Sebastián Woolfolk and María Fernanda Gallo Cruz</h5>
+        <a class="btn btn-primary m-lg-3" href="#" role="button"
+      >Link to github repo</a
+    >
+      </div>
+    </nav>
+    <ul class="nav nav-tabs">
+      <li class="nav-item">
+        <a
+          class="nav-link"
+          aria-current="page"
+          href="http://127.0.0.1:8000/covid_app"
+          >Casos por entidad federativa</a
+        >
+      </li>
+      <li class="nav-item">
+        <a class="nav-link active" href="http://127.0.0.1:8000/covid_app/radial"
+          >Defunciones conforme a Edad/Sexo</a
+        >
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="http://127.0.0.1:8000/covid_app/bubble"
+          >Relación entre enfermedades y defunciones por COVID</a
+        >
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="http://127.0.0.1:8000/covid_app/multiple"
+          >Casos atendidos por sector en cada entidad federativa</a
+        >
+      </li>
+    </ul>
+
+    <!-- Bootstrap grid setup -->
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4">
+          <form></form>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div id="my_dataviz" class='p-5'>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- External JS libraries -->
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="//d3js.org/d3.v3.min.js"></script>
+    <!-- Custom JS -->
+    <script src="{% static 'js/radial.js' %}"></script>
+    {% endblock %}
+  </body>
+</html>

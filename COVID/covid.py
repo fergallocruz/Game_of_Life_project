@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 import json
 import os.path
+from common import *
 
 data_file = "COVID_MX_2020_tst.xlsx"
 catalog_file = "Catalogos.xlsx"
@@ -24,8 +25,8 @@ def load_files():
     if not os.path.exists("export_dataframe.xlsx"):
         print("Loading data source...")
         # Load the main data source
-        xl = pd.ExcelFile(data_file)
-        covid_df = xl.parse('Hoja1')
+        covid_df = pd.read_excel(data_file, sheet_name='Hoja1')
+        
         # Describe our main data set
         # print(covid_df.index)       # Gives me the range of the indices (Number of rows)
         # Gives me rows and columns
@@ -38,7 +39,8 @@ def load_files():
         print("Done.")
         # print(covid_df.head(5))  # Prints the top n values of my data source
         # Save clean data
-        covid_df.to_excel(r'export_dataframe.xlsx', index=False, header=True)
+        covid_df.columns= covid_df.columns.str.lower()
+        covid_df.to_excel(r'export_dataframe.xlsx', index=True, header=True)
     else:
         xl = pd.ExcelFile('export_dataframe.xlsx')
         covid_df = xl.parse('Sheet1')
@@ -72,7 +74,7 @@ def merge_clean_data():
             covid_df.set_index(field)
         elif fields["format"] == "DATE":
             # Clean data of empty fields
-            covid_df[field] = pd.to_datetime(covid_df[field], errors='coerce').fillna('')
+            covid_df[field] = pd.to_datetime(covid_df[field], errors='coerce', format='%Y-%m-%d').fillna('')
             # spread values in different fields
             covid_df[field + "_YR"] = covid_df[field].apply(lambda x: x.year if x != '' else x)
             covid_df[field + "_MT"] = covid_df[field].apply(lambda x: x.month if x != '' else x)
@@ -105,11 +107,20 @@ load_files()
 # dup1[dup1.duplicated()]
 # dup2.drop_duplicates(keep='first',inplace=True)
 
-# print(covid_df["ENTIDAD_RES"].value_counts())
+# print(covid_df['ENTIDAD_RES'].value_counts())
 
 sex_by_state_df = covid_df[['SEXO', 'ENTIDAD_RES']]
 print("The data set contains " + str(sex_by_state_df.shape[0]) + " rows by " + str(sex_by_state_df.shape[1]) + " columns.")
 print(sex_by_state_df.head())
 
+print(catalogs)
+
 # TODO: Make sure you have virtualenv, django and djantorestframework
 
+df = covid_df
+df.columns= df.columns.str.lower()
+#df = df[['id_registro', 'fecha_sintomas', 'entidad_res', 'municipio_res']]
+df['fecha_ingreso'] = df['fecha_ingreso'].dt.strftime('%Y-%m-%d')
+df['fecha_sintomas'] = df['fecha_sintomas'].dt.strftime('%Y-%m-%d')
+df['fecha_def'] = df['fecha_def'].dt.strftime('%Y-%m-%d')
+df.to_json(r'export_dataframe.json',orient="records",force_ascii=False) 

@@ -23,10 +23,10 @@ var arc = d3.arc()
     .outerRadius(radius - 20);
 
 
-data.forEach((d) => {
+/* data.forEach((d) => {
     d.count = +d.count;
     d.fruit = d.fruit.toLowerCase();
-});
+}); */
 
 console.log(data)
 
