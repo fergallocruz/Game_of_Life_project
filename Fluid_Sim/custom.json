@@ -1,0 +1,37 @@
+{
+    "velocity": {
+        "5 50": "1 -1",
+        "5 40": "0 -1"
+    },
+    "density": {
+      "10:45 10:45": 50,
+      "15:35 15:35": 100,
+      "0:10 0:35": 150,
+      "20:40 20:35": 200
+    },
+    "Color Scheme":{
+    "cmap": [
+        "#F6722E",
+        "#F46829",
+        "#FA683B",
+        "#F1472E",
+        "#D53021",
+        "#D63632",
+        "#E24856",
+        "#E74B61",
+        "#E04668",
+        "#AA3465",
+        "#781D48"
+    ],
+    "Axes Color": "#000000",
+    "Title Color": "#000000",
+	"Title"			: "Fluid Simulation",
+    "Background Color": "#FFFFFF",
+    "Objects Color": "#FFFFFF",
+    "Arrows Color": "#FFFFFF"
+  },
+    "objects": {
+      "5 10": [5, 40],
+      "10 45": [40, 5]
+    }
+}
